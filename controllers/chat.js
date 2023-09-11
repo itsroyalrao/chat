@@ -11,4 +11,18 @@ const createChat = async (req, res) => {
   }
 }
 
-module.exports = { createChat };
+const getChats = async (req, res) => {
+  try {
+    const { user } = req.body;
+    const chats = await Chat.find({ email: user });
+
+    const messages = [];
+    chats.forEach(msg => messages.push(msg.message));
+
+    res.status(200).json({ success: true, messages });
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
+module.exports = { createChat, getChats };
