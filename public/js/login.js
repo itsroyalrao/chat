@@ -21,7 +21,7 @@ async function getUser(e) {
 
       if (result.data.success) {
         localStorage.setItem('user', email);
-        window.location.href = '/html/home.html';
+        window.location.href = '/html/chat.html';
       } else {
         msg.appendChild(document.createTextNode(result.data.msg));
       }
