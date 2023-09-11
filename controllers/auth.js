@@ -4,7 +4,7 @@ const Auth = require('../models/auth');
 const signup = async (req, res) => {
   try {
     const { name, phone, email, password } = req.body;
-    const user = await Auth.findOne({ phone: Number(phone) })
+    const user = await Auth.findOne({ email: email });
     if (user) {
       return res.json({ success: false, msg: 'User exists, Please login!' });
     } else {
