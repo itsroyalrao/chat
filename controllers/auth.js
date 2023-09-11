@@ -18,4 +18,19 @@ const signup = async (req, res) => {
   }
 }
 
-module.exports = { signup };
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await Auth.findOne({ email: email })
+
+    bcrypt.compare(password, user.password, (err, same) => {
+      if (same) return res.status(200).json({ success: true });
+      else return res.json({ success: false, msg: 'Password is incorrect!' });
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
+module.exports = { signup, login };
+
