@@ -1,14 +1,17 @@
+const bcrypt = require('bcrypt');
 const Auth = require('../models/auth');
 
 const signup = async (req, res) => {
   try {
     const { name, phone, email, password } = req.body;
-    const user = await Auth.findOne({ email: email })
+    const user = await Auth.findOne({ phone: Number(phone) })
     if (user) {
       return res.json({ success: false, msg: 'User exists, Please login!' });
     } else {
-      await Auth.create({ name, phone: Number(phone), email, password });
-      return res.status(201).json({ success: true, msg: 'Account is created successfuly!' });
+      bcrypt.hash(password, 10, async (err, encrypted) => {
+        await Auth.create({ name, phone: Number(phone), email, password: encrypted });
+        return res.status(201).json({ success: true, msg: 'Account is created successfuly!' });
+      })
     }
   } catch (e) {
     console.log(e.message);
