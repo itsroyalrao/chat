@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link rel="shortcut icon" href="/other/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+  <main class="form-signin w-100 m-auto">
+    <form id="signup-form">
+
+      <h1 class="h3 mb-3 fw-normal" id="text-heading">Join Comhrá</h1>
+
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+        <label for="name">Name</label>
+      </div>
+      <div class="form-floating">
+        <input type="number" class="form-control" id="phone" name="phone" placeholder="Phone">
+        <label for="phone">Phone</label>
+      </div>
+      <div class="form-floating">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+        <label for="email">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        <label for="password">Password</label>
+      </div>
+
+      <div id="message"></div>
+
+      <button id="signup" class="btn w-50 py-2" type="submit">Sign up</button>
+      <a id="login" class="btn w-50 py-2" href="/html/login.html">Login</a>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/js/signup.js"></script>
+</body>
+
+</html>

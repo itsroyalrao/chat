@@ -1,0 +1,55 @@
+html,
+body {
+  height: 100%;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+#text-heading {
+  text-align: center;
+}
+
+#name {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#email, #phone {
+  margin-bottom: -1px;
+  border-radius: 0;
+}
+
+#password {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#message {
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+#signup {
+  background-color: blue;
+  color: whitesmoke;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#login {
+  background-color: green;
+  color: whitesmoke;
+  text-decoration: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  float: right;
+}
