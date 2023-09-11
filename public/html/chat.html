@@ -3,21 +3,27 @@
 
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Chat</title>
+  <title>Chatify</title>
   <link rel="stylesheet" href="/css/chat.css">
   <link rel="shortcut icon" href="/util/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
+  <nav class="navbar">
+    <span>Chatify</span>
+  </nav>
+
   <ul id="messages"></ul>
-  <form id="form" action="">
-    <input id="input" autocomplete="off" placeholder="Enter your message here..." />
+  <form id="form">
+    <input id="inputMessage" autocomplete="off" placeholder="Enter your message here..." />
     <button id="send-btn">
       <img id="sent-img" src="/util/sent.png" alt="sent">
     </button>
   </form>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/js/chat.js"></script>
 </body>
 
 </html>
