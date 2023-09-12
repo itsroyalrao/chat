@@ -48,3 +48,10 @@ function appendChats(message) {
   messages.appendChild(li);
   window.scrollTo(0, document.body.scrollHeight);
 }
+
+(() => {
+  setInterval(async () => {
+    messages.innerHTML = '';
+    await getChats();
+  }, 1000);
+})();
