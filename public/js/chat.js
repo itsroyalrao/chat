@@ -19,7 +19,11 @@ form.addEventListener('submit', async (e) => {
       const result = await axios.post('/chat', messageDetails);
 
       if (result.data.success) {
-        appendChats(msg);
+        for (let i = 1; i < 10; i++) {
+          localStorage.setItem(i - 1, localStorage.getItem(i));
+          console.log(localStorage.getItem(i));
+        }
+        localStorage.setItem(9, msg);
       }
     }
   } catch (e) {
@@ -27,20 +31,12 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-async function getChats() {
-  try {
-    const result = await axios.post('/chat/chats', { user });
-
-    const msg = result.data.messages;
-    for (let i = 0; i < msg.length; i++) {
-      appendChats(msg[i]);
-    }
-
-  } catch (e) {
-    console.log(e.message);
+function getlsChats() {
+  messages.innerHTML = '';
+  for (let i = 0; i < 10; i++) {
+    appendChats(localStorage.getItem(i));
   }
 }
-getChats();
 
 function appendChats(message) {
   const li = document.createElement('li');
@@ -50,8 +46,7 @@ function appendChats(message) {
 }
 
 (() => {
-  setInterval(async () => {
-    messages.innerHTML = '';
-    await getChats();
+  setInterval(() => {
+    getlsChats();
   }, 1000);
 })();
