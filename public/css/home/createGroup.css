@@ -1,0 +1,49 @@
+html,
+body {
+  height: 100%;
+  background-color: black;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+#text-heading {
+  color: whitesmoke;
+  text-align: center;
+}
+
+#message {
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+#join-group {
+  background-color: blue;
+  color: whitesmoke;
+  text-decoration: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  float: right;
+}
+
+#create-group {
+  background-color: green;
+  color: whitesmoke;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#cancel-group {
+  background-color: red;
+  color: whitesmoke;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}

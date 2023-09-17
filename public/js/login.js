@@ -1,27 +1,30 @@
-const form = document.getElementById('login-form');
-const msg = document.getElementById('message');
+const form = document.getElementById("login-form");
+const msg = document.getElementById("message");
 
-form.addEventListener('submit', (e) => getUser(e));
+form.addEventListener("submit", (e) => getUser(e));
 
 async function getUser(e) {
   e.preventDefault();
   try {
-    msg.innerHTML = '';
+    msg.innerHTML = "";
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-    if (!email) msg.appendChild(document.createTextNode('Email can not be empty!'));
-    else if (!password) msg.appendChild(document.createTextNode('Password can not be empty!'));
+    if (!email)
+      msg.appendChild(document.createTextNode("Email can not be empty!"));
+    else if (!password)
+      msg.appendChild(document.createTextNode("Password can not be empty!"));
     else {
       const userDetails = {
-        email, password
-      }
-      const result = await axios.post('/auth/login', userDetails);
+        email,
+        password,
+      };
+      const result = await axios.post("/auth/login", userDetails);
 
       if (result.data.success) {
-        localStorage.setItem('user', email);
-        window.location.href = '/html/chat.html';
+        localStorage.setItem("user", email);
+        window.location.href = "/html/home/myGroups.html";
       } else {
         msg.appendChild(document.createTextNode(result.data.msg));
       }
