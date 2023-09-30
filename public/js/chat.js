@@ -2,6 +2,7 @@ const user = localStorage.getItem("user");
 const userEmail = user;
 if (!user) window.location.href = "/html/login.html";
 
+const socket = io();
 const gname = new URLSearchParams(window.location.search).get("gname");
 
 const form = document.getElementById("form");
@@ -28,15 +29,16 @@ form.addEventListener("submit", async (e) => {
       };
       inputMessage.value = "";
 
-      const result = await axios.post("/chat", messageDetails);
-
-      if (result.data.success) {
-        appendChats(msg);
-      }
+      socket.emit("user-message", msg);
+      await axios.post("/chat", messageDetails);
     }
   } catch (e) {
     console.log(e);
   }
+});
+
+socket.on("message", (message) => {
+  appendChats(message);
 });
 
 function appendChats(message) {
@@ -45,12 +47,6 @@ function appendChats(message) {
   messages.appendChild(li);
   window.scrollTo(0, document.body.scrollHeight);
 }
-
-(() => {
-  setInterval(() => {
-    getChats();
-  }, 1000);
-})();
 
 async function getFriends() {
   try {
