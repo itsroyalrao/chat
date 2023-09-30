@@ -10,6 +10,10 @@ const groupSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+  admins: {
+    type: Array,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Group", groupSchema);

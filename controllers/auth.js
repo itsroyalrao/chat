@@ -39,14 +39,4 @@ const login = async (req, res) => {
   }
 };
 
-const getFriends = async (req, res) => {
-  try {
-    const users = await Auth.find({});
-
-    return res.status(200).json({ success: true, users });
-  } catch (e) {
-    console.log(e.message);
-  }
-};
-
-module.exports = { signup, login, getFriends };
+module.exports = { signup, login };

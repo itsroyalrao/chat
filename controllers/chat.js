@@ -1,4 +1,6 @@
 const Chat = require("../models/chat");
+const Group = require("../models/group");
+const Users = require("../models/auth");
 
 const createChat = async (req, res) => {
   try {
@@ -25,4 +27,71 @@ const getChats = async (req, res) => {
   }
 };
 
-module.exports = { createChat, getChats };
+const getFriends = async (req, res) => {
+  try {
+    const { gname } = req.query;
+    const users = await Group.findOne({ name: gname });
+
+    return res.status(200).json({ success: true, users });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const removeFriend = async (req, res) => {
+  try {
+    const { name, gname, email } = req.query;
+
+    const userList = await Group.findOne({ name: gname });
+    if (userList.admins.includes(email)) {
+      const updatedUserList = [];
+
+      for (const user of userList.users) {
+        const result = await Users.findOne({ email: user });
+        if (result.name !== name) {
+          updatedUserList.push(user);
+        }
+      }
+
+      await Group.findOneAndUpdate({ name: gname }, { users: updatedUserList });
+      return res.status(200).json({ success: true });
+    } else {
+      return res.json({ success: false, msg: "You are not an admin" });
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const searchFriend = async (req, res) => {
+  try {
+    const { friend } = req.body;
+    const user = await Users.findOne({ name: friend });
+
+    if (user) return res.status(200).json({ success: true, user });
+    else return res.json({ success: false });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const friendDetails = async (req, res) => {
+  try {
+    const { friend } = req.query;
+    const user = await Users.findOne({ email: friend });
+
+    if (user) return res.status(200).json({ success: true, user });
+    else return res.json({ success: false });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+module.exports = {
+  createChat,
+  getChats,
+  getFriends,
+  removeFriend,
+  searchFriend,
+  friendDetails,
+};

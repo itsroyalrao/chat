@@ -1,6 +1,4 @@
-const Models = require("../models/home");
-
-const Group = Models.Group;
+const Group = require("../models/group");
 
 const createGroup = async (req, res) => {
   try {
@@ -14,7 +12,7 @@ const createGroup = async (req, res) => {
         msg: `${gname} is already present, Please join`,
       });
     } else {
-      await Group.create({ name: gname, users: user });
+      await Group.create({ name: gname, users: user, admins: user });
       return res
         .status(200)
         .json({ success: true, msg: `${gname} is successfully created` });

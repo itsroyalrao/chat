@@ -111,11 +111,29 @@ main {
   text-decoration: none;
 }
 
+.deleteFriend {
+  float: right;
+  color: red;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.navbar {
+  background-color: green;
+  color: whitesmoke;
+  padding: 12px 0;
+}
+
+#navbar_group-name {
+  margin: auto;
+  text-transform: capitalize;
+}
+
 #message-area {
   width: 75%;
   height: 100%;
   overflow-y: auto;
-  padding: 20px;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }

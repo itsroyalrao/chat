@@ -1,4 +1,4 @@
-const Group = require("../models/home");
+const Group = require("../models/group");
 
 const getGroupsNames = async (req, res) => {
   try {
