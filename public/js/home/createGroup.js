@@ -1,6 +1,8 @@
 const user = localStorage.getItem("user");
 if (!user) window.location.href = "/html/login.html";
-// const form = document.getElementById("create-group-form");
+
+const socket = io();
+
 const createGrp = document.getElementById("create-group");
 const joinGrp = document.getElementById("join-group");
 const message = document.getElementById("message");
@@ -37,10 +39,10 @@ async function joinGroup(e) {
   try {
     const gname = document.getElementById("group-name").value;
     if (gname) {
-      const groupDetails = { user, gname };
+      await socket.emit("join-room", gname);
 
+      const groupDetails = { user, gname };
       const result = await axios.post("/home/join-group", groupDetails);
-      console.log(result);
 
       message.innerHTML = "";
       if (result.data.success) {

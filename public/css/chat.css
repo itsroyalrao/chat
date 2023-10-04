@@ -142,6 +142,10 @@ main {
   width: 0;
 }
 
+.message-area_messages {
+  margin-bottom: 55px;
+}
+
 #messages {
   width: 60%;
   list-style-type: none;
@@ -181,6 +185,13 @@ main {
 
 #inputMessage:focus {
   outline: none;
+}
+
+#files {
+  background-color: #333;
+  color: whitesmoke;
+  border-radius: 2px;
+  align-self: center;
 }
 
 #send-btn {

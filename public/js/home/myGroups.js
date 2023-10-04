@@ -2,6 +2,15 @@ const user = localStorage.getItem("user");
 if (!user) window.location.href = "html/login.html";
 
 const gname = document.querySelector(".my-groups");
+const username = document.getElementById("username");
+
+(async () => {
+  try {
+    const result = await axios.get(`/home?username=${user}`);
+
+    username.appendChild(document.createTextNode(result.data.user.name));
+  } catch (e) {}
+})();
 
 async function getGroupName() {
   try {

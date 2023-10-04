@@ -44,13 +44,19 @@
         <div class="message-area_messages">
           <ul id="messages"></ul>
 
-          <form id="form">
+          <form
+            id="form"
+            action="/upload"
+            method="POST"
+            enctype="multipart/form-data"
+          >
             <input
               id="inputMessage"
               autocomplete="off"
               placeholder="Enter your message here..."
             />
-            <button id="send-btn">
+            <input type="file" name="files" id="files" />
+            <button id="send-btn" type="submit">
               <img id="sent-img" src="/util/sent.png" alt="sent" />
             </button>
           </form>

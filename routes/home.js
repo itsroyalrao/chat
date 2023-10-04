@@ -6,6 +6,7 @@ const chatController = require("../controllers/chat");
 
 const router = express.Router();
 
+router.route("/").get(chatController.getUsername);
 router.route("/friends").get(chatController.getFriends);
 router.route("/create-group").post(homeController.createGroup);
 router.route("/join-group").post(homeController.joinGroup);

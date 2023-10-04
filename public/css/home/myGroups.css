@@ -5,3 +5,8 @@
 .group-name {
   text-align: center;
 }
+
+#username {
+  color: whitesmoke;
+  text-transform: capitalize;
+}

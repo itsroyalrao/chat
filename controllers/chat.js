@@ -87,6 +87,18 @@ const friendDetails = async (req, res) => {
   }
 };
 
+const getUsername = async (req, res) => {
+  try {
+    const { username } = req.query;
+    const user = await Users.findOne({ email: username });
+
+    if (user) return res.status(200).json({ success: true, user });
+    else return res.json({ success: false });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 module.exports = {
   createChat,
   getChats,
@@ -94,4 +106,5 @@ module.exports = {
   removeFriend,
   searchFriend,
   friendDetails,
+  getUsername,
 };

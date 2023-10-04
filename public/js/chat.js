@@ -5,40 +5,86 @@ if (!user) window.location.href = "/html/login.html";
 const socket = io();
 const gname = new URLSearchParams(window.location.search).get("gname");
 
+socket.emit("join room", gname);
+
 const form = document.getElementById("form");
 const searchFriends = document.getElementById("friends-area_input");
 const friendList = document.getElementById("friend-list");
 const navGrpName = document.getElementById("navbar_group-name");
 const inputMessage = document.getElementById("inputMessage");
 const messages = document.getElementById("messages");
+const messageArea = document.getElementById("message-area");
 
 friendList.innerHTML = "";
 
 navGrpName.appendChild(document.createTextNode(gname));
 
-form.addEventListener("submit", async (e) => {
+socket.on("message", (message) => {
+  console.log("Message recieved successfuly");
+  appendChats(message);
+  messageArea.scrollTop = messageArea.scrollHeight;
+});
+
+socket.on("media message", async function (imageURL, filename) {
+  const item = document.createElement("li");
+  const a = document.createElement("a");
+  a.appendChild(document.createTextNode(filename));
+  a.href = imageURL;
+  a.target = "_blank";
+  item.appendChild(a);
+  messages.appendChild(item);
+  messageArea.scrollTop = messageArea.scrollHeight;
+
+  const msg = imageURL;
+  const messageDetails = {
+    user,
+    msg,
+    gname,
+  };
+
+  await axios.post("/chat", messageDetails);
+});
+
+form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   try {
     const msg = inputMessage.value;
-    if (msg) {
+    const filesInput = document.getElementById("files");
+
+    const formData = new FormData();
+    formData.append("room", gname);
+    formData.append("files", filesInput.files[0]);
+
+    if (filesInput.files.length) {
+      try {
+        const result = await axios.post("/upload", formData);
+
+        socket.emit(
+          "media message",
+          result.data.result,
+          result.data.file.originalname,
+          gname
+        );
+        filesInput.value = "";
+      } catch (error) {
+        console.error("Error sending files:", error);
+      }
+    } else if (msg) {
       const messageDetails = {
         user,
         msg,
         gname,
       };
-      inputMessage.value = "";
 
-      socket.emit("user-message", msg);
+      socket.emit("user-message", msg, gname);
+
       await axios.post("/chat", messageDetails);
     }
+    inputMessage.value = "";
   } catch (e) {
     console.log(e);
   }
-});
-
-socket.on("message", (message) => {
-  appendChats(message);
 });
 
 function appendChats(message) {
@@ -77,6 +123,7 @@ async function getChats() {
     chats.forEach((message) => {
       appendChats(message);
     });
+    messageArea.scrollTop = messageArea.scrollHeight;
   } catch (e) {
     console.log(e);
   }
