@@ -13,6 +13,14 @@ const chatSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  messageType: {
+    type: String,
+    required: true,
+    default: "text",
+  },
+  link: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("chat", chatSchema);

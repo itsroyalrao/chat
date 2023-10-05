@@ -25,25 +25,9 @@ socket.on("message", (message) => {
   messageArea.scrollTop = messageArea.scrollHeight;
 });
 
-socket.on("media message", async function (imageURL, filename) {
-  const item = document.createElement("li");
-  const a = document.createElement("a");
-  a.appendChild(document.createTextNode(filename));
-  a.href = imageURL;
-  a.target = "_blank";
-  item.appendChild(a);
-  messages.appendChild(item);
-  messageArea.scrollTop = messageArea.scrollHeight;
-
-  const msg = imageURL;
-  const messageDetails = {
-    user,
-    msg,
-    gname,
-  };
-
-  await axios.post("/chat", messageDetails);
-});
+socket.on("media message", (imageURL, filename) =>
+  appendMedia(imageURL, filename)
+);
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -67,6 +51,16 @@ form.addEventListener("submit", async function (e) {
           gname
         );
         filesInput.value = "";
+
+        const messageDetails = {
+          user,
+          msg: result.data.file.originalname,
+          gname,
+          messageType: result.data.file.mimetype,
+          link: result.data.result,
+        };
+
+        await axios.post("/chat", messageDetails);
       } catch (error) {
         console.error("Error sending files:", error);
       }
@@ -75,6 +69,7 @@ form.addEventListener("submit", async function (e) {
         user,
         msg,
         gname,
+        messageType: "text",
       };
 
       socket.emit("user-message", msg, gname);
@@ -92,6 +87,16 @@ function appendChats(message) {
   li.textContent = message;
   messages.appendChild(li);
   window.scrollTo(0, document.body.scrollHeight);
+}
+function appendMedia(imageURL, filename) {
+  const item = document.createElement("li");
+  const a = document.createElement("a");
+  a.appendChild(document.createTextNode(filename));
+  a.href = imageURL;
+  a.target = "_blank";
+  item.appendChild(a);
+  messages.appendChild(item);
+  messageArea.scrollTop = messageArea.scrollHeight;
 }
 
 async function getFriends() {
@@ -120,8 +125,9 @@ async function getChats() {
     chats = chats.data.messages;
 
     messages.innerHTML = "";
-    chats.forEach((message) => {
-      appendChats(message);
+    chats.forEach((msg) => {
+      if (msg.messageType === "text") appendChats(msg.message);
+      else appendMedia(msg.link, msg.message);
     });
     messageArea.scrollTop = messageArea.scrollHeight;
   } catch (e) {

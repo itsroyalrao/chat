@@ -4,9 +4,20 @@ const Users = require("../models/auth");
 
 const createChat = async (req, res) => {
   try {
-    const { user, msg, gname } = req.body;
+    const { user, msg, gname, messageType } = req.body;
 
-    await Chat.create({ email: user, message: msg, group: gname });
+    if (messageType === "text")
+      await Chat.create({ email: user, message: msg, group: gname });
+    else {
+      const { link } = req.body;
+      await Chat.create({
+        email: user,
+        message: msg,
+        group: gname,
+        messageType,
+        link,
+      });
+    }
     res.status(200).json({ success: true });
   } catch (e) {
     console.log(e.message);
@@ -19,7 +30,15 @@ const getChats = async (req, res) => {
     const chats = await Chat.find({ group: gname });
 
     const messages = [];
-    chats.forEach((msg) => messages.push(msg.message));
+    chats.forEach((msg) => {
+      const message = msg.message;
+      const messageType = msg.messageType;
+      if (messageType === "text") messages.push({ message, messageType });
+      else {
+        const link = msg.link;
+        messages.push({ message, messageType, link });
+      }
+    });
 
     res.status(200).json({ success: true, messages });
   } catch (e) {
