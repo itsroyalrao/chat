@@ -1,4 +1,4 @@
-const Chat = require("../models/chat");
+const { Chat } = require("../models/chat");
 const Group = require("../models/group");
 const Users = require("../models/auth");
 

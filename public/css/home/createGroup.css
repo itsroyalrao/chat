@@ -23,13 +23,12 @@ body {
   text-align: center;
 }
 
-#join-group {
-  background-color: blue;
-  color: whitesmoke;
+#cancel-group {
+  background-color: tomato;
+  color: white;
   text-decoration: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   float: right;
 }
 
@@ -38,12 +37,8 @@ body {
   color: whitesmoke;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
-#cancel-group {
-  background-color: red;
-  color: whitesmoke;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+#group-name {
+  text-transform: capitalize;
 }

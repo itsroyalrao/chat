@@ -45,6 +45,7 @@ function appendGroupName(group) {
   const h5 = document.createElement("h5");
   h5.className = "group-name";
   h5.appendChild(document.createTextNode(group));
+  h5.style.textTransform = "capitalize";
 
   cardDiv.appendChild(img);
   cardDiv.appendChild(h5);

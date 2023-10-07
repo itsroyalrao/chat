@@ -5,6 +5,7 @@ const { join } = require("node:path");
 const multer = require("multer");
 const cors = require("cors");
 const { Server } = require("socket.io");
+require("./controllers/archivedChats");
 
 const connectDB = require("./db/connect");
 const authRoute = require("./routes/auth");
@@ -38,7 +39,6 @@ const upload = multer({ storage: storage });
 
 app.post("/upload", upload.single("files"), async (req, res) => {
   const file = req.file;
-  const formData = req.body;
 
   try {
     putObject(file.filename, file.mimetype);

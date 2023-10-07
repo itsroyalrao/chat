@@ -8,46 +8,24 @@ const joinGrp = document.getElementById("join-group");
 const message = document.getElementById("message");
 
 createGrp.addEventListener("click", (e) => createGroup(e));
-joinGrp.addEventListener("click", (e) => joinGroup(e));
 
 async function createGroup(e) {
   e.preventDefault();
 
   try {
-    const gname = document.getElementById("group-name").value;
+    const inputElement = document.getElementById("group-name");
+    const gname = capitalize(inputElement.value);
+
     if (gname) {
       const groupDetails = { user, gname };
 
       const result = await axios.post("/home/create-group", groupDetails);
 
       message.innerHTML = "";
-      if (result.data.success) message.style.color = "green";
-      else message.style.color = "red";
-      message.appendChild(document.createTextNode(result.data.msg));
-    } else {
-      message.style.color = "red";
-      message.appendChild(document.createTextNode("Please provide a value"));
-    }
-  } catch (e) {
-    console.log(e.message);
-  }
-}
-
-async function joinGroup(e) {
-  e.preventDefault();
-
-  try {
-    const gname = document.getElementById("group-name").value;
-    if (gname) {
-      await socket.emit("join-room", gname);
-
-      const groupDetails = { user, gname };
-      const result = await axios.post("/home/join-group", groupDetails);
-
-      message.innerHTML = "";
       if (result.data.success) {
         window.location.href = `/html/chat.html?gname=${gname}`;
       } else {
+        message.style.color = "red";
         message.appendChild(document.createTextNode(result.data.msg));
       }
     } else {
@@ -57,4 +35,18 @@ async function joinGroup(e) {
   } catch (e) {
     console.log(e.message);
   }
+}
+
+function capitalize(str) {
+  const words = str.split(" ");
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = capitalizeFirstLetter(words[i]);
+  }
+
+  return words.join(" ");
+}
+
+function capitalizeFirstLetter(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
 }
